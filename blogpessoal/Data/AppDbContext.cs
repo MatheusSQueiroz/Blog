@@ -11,6 +11,14 @@ namespace blogpessoal.Data
         {
             modelBuilder.Entity<Postagem>().ToTable("tb_postagens");
             modelBuilder.Entity<Tema>().ToTable("tb_temas");
+
+            //Criando o relacionamento entre as duas entidades (UM PARA MUITOS)
+
+            _ = modelBuilder.Entity<Postagem>()
+                .HasOne(_ => _.Tema)                     //Indicando quem sera o lado UM da relação
+                .WithMany(t => t.Postagem)              //Indicando quem sera o lado MUITOS da relação
+                .HasForeignKey("TemaId")                //Indicando a chave estrangeira
+                .OnDelete(DeleteBehavior.Cascade);      //Indicando o cascateamento de deletar temas
         }
 
         //Registrar um DbSet - Objeto responsável por manipular a tabela

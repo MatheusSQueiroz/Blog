@@ -17,7 +17,12 @@ namespace blogpessoal
 
             // Add services to the container.
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers()
+                .AddNewtonsoftJson(options =>
+                {
+                    //Ignorar o loop de referencia quando for fazer uma consulta
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                });
 
             //Conexão com o banco de dados
 
