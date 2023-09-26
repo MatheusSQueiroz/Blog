@@ -1,0 +1,17 @@
+﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+
+namespace blogpessoal.Model
+{
+    public class Tema
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] 
+        public long Id { get; set; }
+
+        [Column(TypeName = "varchar")]
+        [StringLength(255)]
+        public string Descricao { get; set; } = string.Empty;
+    }
+}
