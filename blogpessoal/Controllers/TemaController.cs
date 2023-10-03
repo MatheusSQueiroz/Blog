@@ -1,14 +1,15 @@
 ﻿using blogpessoal.Model;
 using blogpessoal.Service;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace blogpessoal.Controllers
 {
-       [Route("~/temas")]
-       [ApiController]
-
+    [Authorize]
+    [Route("~/temas")]
+    [ApiController]
     public class TemaController : ControllerBase
     {
         private readonly ITemaService _temaService;
