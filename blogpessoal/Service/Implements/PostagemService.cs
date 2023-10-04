@@ -56,12 +56,13 @@ namespace blogpessoal.Service.Implements
 
                 if (BuscaTema is null)
                     return null;
+
+                postagem.Tema = BuscaTema;
+
+                postagem.Usuario = postagem.Usuario is not null ?
+                    await _context.Users.FirstOrDefaultAsync(u => u.Id == postagem.Usuario.Id) : null;
             }
 
-
-            postagem.Usuario = postagem.Usuario is not null ? 
-                await _context.Users.FirstOrDefaultAsync(u => 
-                u.Id == postagem.Usuario.Id) : null;
             
             await _context.Postagens.AddAsync(postagem);
             await _context.SaveChangesAsync();
@@ -81,11 +82,14 @@ namespace blogpessoal.Service.Implements
 
                 if (BuscaTema is null)
                     return null;
+
+                postagem.Tema = BuscaTema;
+
+                postagem.Usuario = postagem.Usuario is not null ?
+                    await _context.Users.FirstOrDefaultAsync(u => u.Id == postagem.Usuario.Id) : null;
             }
 
-            postagem.Usuario = postagem.Usuario is not null ?
-                await _context.Users.FirstOrDefaultAsync(u => 
-                u.Id == postagem.Usuario.Id) : null;
+            
 
             _context.Entry(PostagemUpdate).State = EntityState.Detached;
             _context.Entry(postagem).State = EntityState.Modified;

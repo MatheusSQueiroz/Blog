@@ -20,7 +20,7 @@ namespace blogpessoal.Security.Implements
         {
             string FotoDefault = "https://i.imgur.com/I8MfmC8.png";
 
-            if(userLogin is null || string.IsNullOrEmpty(userLogin.Usuario) || (userLogin is null || string.IsNullOrEmpty(userLogin.Senha)))
+            if (userLogin is null || string.IsNullOrEmpty(userLogin.Usuario) || string.IsNullOrEmpty(userLogin.Senha))
                 return null;
 
             var BuscaUsuario = await _userService.GetByUsuario(userLogin.Usuario);
