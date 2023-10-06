@@ -27,6 +27,7 @@ namespace blogpessoal
                 {
                     //Ignorar o loop de referencia quando for fazer uma consulta
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+                    options.SerializerSettings.NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore;
                 });
 
             //Conexão com o banco de dados

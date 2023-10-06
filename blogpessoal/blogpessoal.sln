@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blogpessoal", "blogpessoal.csproj", "{37B33DFD-608A-4578-B98C-A61FEA117C7E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "blogpessoal", "blogpessoal.csproj", "{37B33DFD-608A-4578-B98C-A61FEA117C7E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogPessoalTeste", "..\BlogPessoalTeste\BlogPessoalTeste.csproj", "{DAC46C56-2A0D-4AEA-AA02-8500696623F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{37B33DFD-608A-4578-B98C-A61FEA117C7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{37B33DFD-608A-4578-B98C-A61FEA117C7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{37B33DFD-608A-4578-B98C-A61FEA117C7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DAC46C56-2A0D-4AEA-AA02-8500696623F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DAC46C56-2A0D-4AEA-AA02-8500696623F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DAC46C56-2A0D-4AEA-AA02-8500696623F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DAC46C56-2A0D-4AEA-AA02-8500696623F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -25,7 +25,7 @@ namespace blogpessoal.Security.Implements
 
             var BuscaUsuario = await _userService.GetByUsuario(userLogin.Usuario);
 
-            if (BuscaUsuario is not null)
+            if (BuscaUsuario is null)
                 return null;
 
             if (!BCrypt.Net.BCrypt.Verify(userLogin.Senha, BuscaUsuario.Senha)) 
