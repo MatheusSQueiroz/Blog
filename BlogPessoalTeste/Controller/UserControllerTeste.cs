@@ -36,8 +36,8 @@ public class UserControllerTest : IClassFixture<WebAppFactory>
     {
         var novoUsuario = new Dictionary<string, string>()
         {
-            { "nome", "Ingrid" },
-            { "usuario", "ingrid@email.com" },
+            { "nome", "Bugson" },
+            { "usuario", "bugson@email.com" },
             { "senha", "12345678" },
             {"foto", "" }
         };
@@ -55,8 +55,8 @@ public class UserControllerTest : IClassFixture<WebAppFactory>
     {
         var novoUsuario = new Dictionary<string, string>()
         {
-            { "nome", "Ingrid" },
-            { "usuario", "ingridemail.com" },
+            { "nome", "Bugson" },
+            { "usuario", "bugsonemail.com" },
             { "senha", "12345678" },
             {"foto", "" }
         };
@@ -74,8 +74,8 @@ public class UserControllerTest : IClassFixture<WebAppFactory>
     {
         var novoUsuario = new Dictionary<string, string>()
         {
-            { "nome", "Karina" },
-            { "usuario", "karina@email.com" },
+            { "nome", "Bugson" },
+            { "usuario", "bugson@email.com" },
             { "senha", "12345678" },
             {"foto", "" }
         };
@@ -105,8 +105,8 @@ public class UserControllerTest : IClassFixture<WebAppFactory>
     {
         var novoUsuario = new Dictionary<string, string>()
         {
-            { "nome", "João" },
-            { "usuario", "joao@email.com" },
+            { "nome", "Matheus" },
+            { "usuario", "matheus@email.com" },
             { "senha", "12345678" },
             {"foto", "" }
         };
@@ -124,8 +124,8 @@ public class UserControllerTest : IClassFixture<WebAppFactory>
         var usuarioAtualizado = new Dictionary<string, string>()
         {
             { "id", Id },
-            { "nome", "João Atualizado" },
-            { "usuario", "joao@email.com" },
+            { "nome", "Matheus Atualizado" },
+            { "usuario", "matheus@email.com" },
             { "senha", "12345678" },
             { "foto", "" }
         };
@@ -155,13 +155,13 @@ public class UserControllerTest : IClassFixture<WebAppFactory>
     [Fact, Order(7)]
     public async Task DeveAutenticarUmUsuario()
     {
-        var novoUsuario = new Dictionary<string, string>()
+        var autenticarUsuario = new Dictionary<string, string>()
         {
-            { "usuario", "joao@email.com" },
+            { "usuario", "matheus@email.com" },
             { "senha", "12345678" }
         };
 
-        var usuarioJson = JsonConvert.SerializeObject(novoUsuario);
+        var usuarioJson = JsonConvert.SerializeObject(autenticarUsuario);
         var corpoRequisicao = new StringContent(usuarioJson, Encoding.UTF8, "application/json");
 
         var resposta = await _client.PostAsync("/usuarios/logar", corpoRequisicao);
