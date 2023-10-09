@@ -1,4 +1,5 @@
 
+using blogpessoal.Configuration;
 using blogpessoal.Data;
 using blogpessoal.Model;
 using blogpessoal.Security;
@@ -7,9 +8,11 @@ using blogpessoal.Service;
 using blogpessoal.Service.Implements;
 using blogpessoal.Validator;
 using FluentValidation;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using System.Text;
 
 namespace blogpessoal
@@ -31,14 +34,26 @@ namespace blogpessoal
                 });
 
             //Conexão com o banco de dados
+            if (builder.Configuration["Enviroment:Start"] == "PROD")
+            {
+                builder.Configuration.SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("secrets.json");
 
-            var connectionString = builder.Configuration
-                .GetConnectionString("DefaultConnection");
+                var connectionString = builder.Configuration
+                .GetConnectionString("ProdConnection");
 
-            builder.Services.AddDbContext<AppDbContext>(options => 
-            options.UseSqlServer(connectionString)
+                builder.Services.AddDbContext<AppDbContext>(options =>
+                    options.UseNpgsql(connectionString)
             );
+            }
+            else
+            {
+                var connectionString = builder.Configuration
+                    .GetConnectionString("DefaultConnection");
 
+                builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(connectionString)
+                );
+            }
             //Registrar a validação das entidades
             builder.Services.AddTransient<IValidator<Postagem>, PostagemValidator>();
             builder.Services.AddTransient<IValidator<Tema>, TemaValidator>();
@@ -72,7 +87,49 @@ namespace blogpessoal
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
+
+
+            //Configuração do swagger
+            builder.Services.AddSwaggerGen(options =>
+            {
+                //Informações do projeto e da pessoa desenvolvedora
+                options.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "Projeto Blog Pessoal",
+                    Description = "Projeto blog pessoal ASP.NET CORE 7.0",
+                    Contact = new OpenApiContact
+                    {
+                        Name = "Matheus S Queiroz",
+                        Email = "matheusqrz.dev@gmail.com",
+                        Url = new Uri("https://github.com/MatheusSQueiroz")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Github",
+                        Url = new Uri("https://github.com/MatheusSQueiroz/Blog")
+                    }
+                });
+
+                //configuração de segurança no swagger
+                options.AddSecurityDefinition("JWT", new OpenApiSecurityScheme
+                {
+                    In = ParameterLocation.Header,
+                    Description = "Digite um Token JWT válido",
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    BearerFormat = "JWT",
+                    Scheme = "Bearer"
+
+                });
+
+                //Adicionar a indicação de endpoint protegido
+                options.OperationFilter<AuthResponsesOperationFilter>();
+
+            });
+
+            //Adicionar o Fluent Validantion no Swagger
+            builder.Services.AddFluentValidationRulesToSwagger();
 
             //Configuração do CORS
             builder.Services.AddCors(options =>
@@ -96,11 +153,21 @@ namespace blogpessoal
             }
 
             // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
+            //if (app.Environment.IsDevelopment())
+            //{
                 app.UseSwagger();
-                app.UseSwaggerUI();
+
+            //Swagger como pagina inicial na nuvem
+            if (app.Environment.IsProduction())
+            {
+                
+                app.UseSwaggerUI(options =>
+                {
+                    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Blog Pessoal - v1");
+                    options.RoutePrefix = string.Empty;
+                });
             }
+           //}
 
             //Inicializa o CORS
             app.UseCors("MyPolicy");
